@@ -1,0 +1,41 @@
+{
+    "task": "mixture_pnp"  //  root/task/images-models-options
+    , "model": "pnp3" // "plain"
+    , "gpu_ids": [0]
+    , "sigma": 50      // 12.75, 25, 38.25, 51
+    , "sp": 50
+  
+    , "n_channels": 1  // broadcast to "datasets", 1 for grayscale, 3 for color
+  
+    , "path": {
+      "root": "denoising"            // "denoising" | "superresolution"
+    }
+  
+    , "datasets": {
+      "test": {
+        "name": "test_dataset"                 // just name // , "dataset_type": "plain2"
+        , "dataset_type": "amf"           // ori: "mixture"
+        , "dataroot_H": "./testsets/set12/"         // path of H testing dataset
+        , "dataroot_L": "./testsets/set12_noise/50_50"   // path of L testing dataset
+        , "dataroot_C": "./testsets/set12_deblur/50_0.5"     // path of L testing dataset
+      }
+    }
+  
+    , "netG": {
+      "net_type": "mixture_pnp"
+  
+      , "init_type": "orthogonal"         // "orthogonal" | "normal" | "uniform" | "xavier_normal" | "xavier_uniform" | "kaiming_normal" | "kaiming_uniform"
+      , "init_bn_type": "uniform"         // "uniform" | "constant"
+      , "init_gain": 0.2    //init 0.2
+
+      , "beta": 0.05  // init 1.1  
+      , "eta": 125    // init 26.5
+      , "admm_iter_num": 10
+      , "denoisor": "drunet"
+      , "denoisor_pth": "model_zoo/drunet_gray.pth"
+      , "max_denoisor_load_len": 100
+    }
+  
+    , "train": { }          // unused
+  }
+  
